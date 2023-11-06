@@ -1,3 +1,5 @@
+// to get computer choice 
+
 function getComputerChoice(){
     let result = Math.floor(Math.random() * 10);
     if(result >= 0 && result < 3) {
@@ -11,7 +13,7 @@ function getComputerChoice(){
     }
 }
 
-
+// function that will check who won the game
 function playRound(playerSelection, computerSelection){
     if (playerSelection === "rock"){
         switch (computerSelection){
@@ -59,118 +61,111 @@ function playRound(playerSelection, computerSelection){
     }    
     }
 
-
-
-
-
 let playerCount = 0;
 let computerCount = 0;
 let playerSelection;
 let computerSelection; 
+let gameInProgress = true;
 
-
-
-// function game(){
-   
-//         let playerSelection1 = prompt("choose rock, paper or scissor");
-//         playerSelection = playerSelection1.toLowerCase();
-//         console.log(`player chose ${playerSelection}`)
-//         let computerSelection = getComputerChoice();
-//         console.log("computerSelection is", computerSelection);
-//         console.log(playRound(playerSelection, computerSelection));
-
-
-    
-    
-// }
-
-//game();
-// console.log("playerCount is", playerCount);
-// console.log(`computerCount is ${computerCount}`);
-
-function winner(){
-
-    if (playerCount > computerCount){
-        console.log("You won");
-    }
-    else if(computerCount > playerCount){
-        console.log("You lost");
-    }
-    else{
-        console.log("it's a draw");
-    }
-}
-
-// winner();
-
-// FOR THE UI 
-
+ 
 let rock = document.getElementById('rock');
 let paper = document.getElementById('paper');
 let scissor = document.getElementById('scissor');
 
 rock.addEventListener('click', () => {
+    if (gameInProgress){
     playerSelection = 'rock';
-    computerSelection = getComputerChoice();
-    console.log(computerSelection);
-    let result = document.createElement('div');
-   // result.textContent = `computer Selection is ${computerSelection}, player selection is ${playerSelection}`;
-   let textNode = document.createTextNode(`computer selected ${computerSelection}, player selected ${playerSelection} and ${playRound(playerSelection, computerSelection)}, player score is ${playerCount}, computer score is ${computerCount}`);
-    document.body.appendChild(result);
-    result.appendChild(textNode);
-    if (playerCount === 5){
-        let newTextNode = document.createTextNode('you won');
-        document.body.appendChild(newTextNode);
-    }
-    else if (computerCount === 5){
-        let newTextNode = document.createTextNode('you lost');
-        document.body.appendChild(newTextNode);  
-    }
-    
-   
-})
-paper.addEventListener('click', () => {
-    playerSelection = 'paper';
-    computerSelection = getComputerChoice();
-    console.log(`computerSelection is ${computerSelection}`);
-    let result = document.createElement('div');
-    let textNode = document.createTextNode(`computer selected ${computerSelection}, player selected ${playerSelection} and ${playRound(playerSelection, computerSelection)}, player score is ${playerCount}, computer score is ${computerCount}`);
-    document.body.appendChild(result);
-    result.appendChild(textNode);
-    if (playerCount === 5){
-        let newTextNode = document.createTextNode('you won');
-        document.body.appendChild(newTextNode);
-    }
-    else if (computerCount === 5){
-        let newTextNode = document.createTextNode('you lost');
-        document.body.appendChild(newTextNode);  
-    }
-    
-    
-    
-   
-})
-scissor.addEventListener('click', () => {
-    playerSelection = 'scissor';
-    computerSelection = getComputerChoice();
-    console.log(computerSelection);
-    let result = document.createElement('div');
-    let textNode = document.createTextNode(`computer selected ${computerSelection}, player selected ${playerSelection} and ${playRound(playerSelection, computerSelection)}, player score is ${playerCount}, computer score is ${computerCount}`);
-    document.body.appendChild(result);
-    result.appendChild(textNode);
-    if (playerCount === 5){
-        let newTextNode = document.createTextNode('you won');
-        document.body.appendChild(newTextNode);
-    }
-    else if (computerCount === 5){
-        let newTextNode = document.createTextNode('you lost');
-        document.body.appendChild(newTextNode);  
-    }
-    
-    
-    
-
+    game();
+    rock.classList.add('highlight');  
+    overlay();
+    };
 });
+
+paper.addEventListener('click', () => {
+    if (gameInProgress){
+    playerSelection = 'paper';
+    game();
+    paper.classList.add('highlight');  
+    overlay();
+    };
+});
+
+scissor.addEventListener('click', () => {
+    if (gameInProgress){
+    playerSelection = 'scissor';
+    game();
+    // highlight the element clicked by user 
+    scissor.classList.add('highlight');
+    overlay();
+    };
+});
+
+document.addEventListener('mouseup', (e) => {
+    rock.classList.remove('highlight');
+    paper.classList.remove('highlight');
+    scissor.classList.remove('highlight');
+ });
+ 
+function game() {
+    computerSelection = getComputerChoice();
+
+    // got div that will display who won
+    let result = document.getElementById('details')
+
+    // button that will display computer's choice 
+    let computerChoice = document.querySelector('.btn-computer');
+    
+    computerChoice.textContent = computerSelection.toUpperCase();
+    result.textContent = playRound(playerSelection, computerSelection).toUpperCase();
+    let humanScore = document.querySelector('.human');
+    humanScore.textContent = playerCount; 
+    let computerScore = document.querySelector('.computer');
+    computerScore.textContent = computerCount;
+    
+}
+
+function overlay() {
+    if (playerCount === 5){
+        let finalResult = document.getElementById('details');
+        finalResult.textContent = 'You Won';
+       
+        playAgain();
+        gameInProgress = false;
+        
+        
+
+    }
+
+    else if (computerCount === 5) {
+        let finalResult = document.getElementById('details');
+        finalResult.textContent = 'You Lost';
+        
+        playAgain();
+        gameInProgress = false;
+
+        
+    }
+
+} 
+
+function playAgain() {
+    let btnNew = document.createElement('button');
+    btnNew.textContent = 'Play Again';
+    let appendbtn = document.getElementById('details');
+    btnNew.style.backgroundColor = 'silver';
+    appendbtn.appendChild(btnNew);
+    btnNew.addEventListener('click', () => {
+        playerCount = 0;
+        computerCount = 0;
+        let humanScore = document.querySelector('.human');
+        humanScore.textContent = playerCount; 
+        let computerScore = document.querySelector('.computer');
+        computerScore.textContent = computerCount;
+         appendbtn.removeChild(btnNew);
+    });
+
+}
+
 
 
 

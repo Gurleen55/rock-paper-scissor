@@ -3,15 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.cdnfonts.com/css/common-pixel" rel="stylesheet">
 </head>
 <body>
-    <button id="rock">ROCK</button>
-    <button id ='paper'>PAPER</button>
-    <button id="scissor">SCISSOR</button>
-    <script src="javascript.js"></script>
+    <h1>ROCK PAPER SCISSOR</h1>
+    <div id="container">
+        <div id="btn-container">
+            <h3 id="header"> PUNY HUMAN, MAKE YOUR CHOICE</h3>
+            <button id="rock">ROCK</button>
+            <button id ='paper'>PAPER</button>
+            <button id="scissor">SCISSOR</button>
+        </div>
+        <div id="computer">
+            <h3 id="header">MY CHOICE</h3>
+            <button class="btn-computer"></button>
+        </div>
+    </div>
 
-   
+    <div id="details"></div>
+
+    <div id="result">
+        <div id="score">
+            <div>YOUR SCORE</div>
+            <div class="human">0</div>
+        </div>
+        <div id="score">
+            <div>COMPUTER'S SCORE</div>
+            <div class="computer">0</div>
+        </div>
+    </div>
 
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="javascript.js"></script>
+
 </body>
 </html>
