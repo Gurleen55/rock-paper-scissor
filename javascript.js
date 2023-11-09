@@ -162,6 +162,7 @@ function playAgain() {
         let computerScore = document.querySelector('.computer');
         computerScore.textContent = computerCount;
          appendbtn.removeChild(btnNew);
+         gameInProgress = true;
     });
 
 }
